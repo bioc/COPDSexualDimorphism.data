@@ -1,0 +1,76 @@
+\documentclass{article}
+
+%% setup below are from knitr-minimal.Rnw file
+\usepackage[sc]{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{
+ pdfstartview={XYZ null null 1}}
+%% end knitr-minimal setup
+
+%\VignetteIndexEntry{SDCD Genes}
+
+\title{Gene Expression and Methylation from Lung Genomic Research Consortium (LGRC)}
+\author{J Fah Sathirapongsasuti}
+
+\begin{document}
+
+\maketitle
+
+The data is also available at https://www.lung-genomics.org/research/. We provide them here in a processed form to accompany the methods in the package \texttt{COPDSexualDimorphism}.
+
+\section{Clinical Data}
+
+Clinical phenotypes of 254 LGRC samples are given as a \texttt{data.frame} named \texttt{meta}. It has six fields: \texttt{tissueid}, \texttt{newid}, \texttt{GENDER}, \texttt{age}, \texttt{cigever}, \texttt{pkyrs}, and \texttt{diagmaj}. \texttt{tissueid} identifies the samples and \texttt{newid} identifies the subjects. Some subjects might have more than one sample from left/right/upper/lower lung or blood. These are designated by the last two letters of the tissue ID. The information for these samples have been adjudicated as described in Sathirapongsasuti et al (in review).
+
+<<>>=
+library(COPDSexualDimorphism.data)
+`%+%` <- function(x,y) paste(x,y,sep="")
+
+data(lgrc.meta)
+head(meta)
+@
+
+\section{Gene Expression}
+
+Gene expression profile for 229 LGRC samples are available in two parts. One is \texttt{expr}, a \texttt{matrix} of 14497 Ensembl genes (rows) by 229 samples (columns), and the other is \texttt{expr.meta}, a \texttt{data.frame} of 229 samples (rows) by the subjects' clinical metadata. The subjects are arranged in the same order in the two objects.
+
+<<>>=
+data(lgrc.expr)
+data(lgrc.expr.meta)
+
+dim(expr)
+head(expr.meta)
+@
+
+Corresponding to the Ensembl genes in the expression profile is the data frame \texttt{genes}. This is a result of a query to BiomaRt database, stored here for convenience.
+
+<<>>=
+data(lgrc.genes)
+head(lgrc.genes)
+@
+
+\section{Methylation}
+
+Methylation data for 245 LGRC subjects is provided as a data frame \texttt{methp} which contains percent methylation for 12094 variably methylated regions (VMRs). Each row provides average median absolute deviation (MAD), length, and the number of probes for a VMR.
+
+<<>>=
+data(lgrc.methp)
+methp[1:5, c("name","ave.mad","length","num.probes")]
+@
+
+\section{Session Information}
+
+<<>>=
+sessionInfo()
+@
+
+\end{document}
+
