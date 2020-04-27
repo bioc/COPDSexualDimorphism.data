@@ -2,7 +2,7 @@ Package: COPDSexualDimorphism.data
 Type: Package
 Title: Data to support sexually dimorphic and COPD differential
         analysis for gene expression and methylation.
-Version: 1.24.0
+Version: 1.25.0
 Date: 2013-10-14
 Author: J Fah Sathirapongsasuti
 Maintainer: J Fah Sathirapongsasuti <fah@cs.stanford.edu>
